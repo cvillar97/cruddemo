@@ -24,6 +24,17 @@ public class EmployeeController {
         return employeeService.findAll();
     }
 
+    @GetMapping("/employees/{id}")
+    public Employee getEmployee(@PathVariable int id) {
+
+        Employee theEmployee = employeeService.getEmployee(id);
+
+        if( theEmployee == null) {
+            throw new EmployeeNotFoundException("Employee id not found - " + id);
+        }
+
+        return theEmployee;
+    }
 
 
 
