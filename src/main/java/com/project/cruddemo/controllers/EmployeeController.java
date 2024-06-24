@@ -1,5 +1,6 @@
 package com.project.cruddemo.controllers;
 
+import com.project.cruddemo.exceptions.BadRequestException;
 import com.project.cruddemo.exceptions.EmployeeNotFoundException;
 import com.project.cruddemo.models.Employee;
 import com.project.cruddemo.service.EmployeeService;
@@ -25,9 +26,17 @@ public class EmployeeController {
     }
 
     @GetMapping("/employees/{id}")
-    public Employee getEmployee(@PathVariable int id) {
+    public Employee getEmployee(@PathVariable String id) {
 
-        Employee theEmployee = employeeService.getEmployee(id);
+        int employeeId = 0;
+        try {
+            employeeId = Integer.parseInt(id);
+        } catch (Exception ex) {
+            throw new BadRequestException("Failed to convert value of type String to " +
+                    "required type int ; For input String: " + id);
+        }
+
+        Employee theEmployee = employeeService.getEmployee(employeeId);
 
         if( theEmployee == null) {
             throw new EmployeeNotFoundException("Employee id not found - " + id);
