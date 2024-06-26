@@ -45,6 +45,44 @@ public class EmployeeController {
         return theEmployee;
     }
 
+    @PostMapping("/employees")
+    public Employee addEmployee(@RequestBody Employee employee) {
 
+        employee.setId(0);
+
+        Employee dbEmployee = employeeService.saveEmployee(employee);
+
+        return dbEmployee;
+    }
+
+    @PutMapping("/employees")
+    public Employee updateEmployee(@RequestBody Employee employee) {
+
+        Employee dbEmployee = employeeService.saveEmployee(employee);
+
+        return dbEmployee;
+    }
+
+    @DeleteMapping("/employees/{id}")
+    public String deleteEmployee(@PathVariable String id) {
+
+        int employeeId = 0;
+        try {
+            employeeId = Integer.parseInt(id);
+        } catch (Exception ex) {
+            throw new BadRequestException("Failed to convert value of type String to " +
+                    "required type int ; For input String: " + id);
+        }
+
+        Employee theEmployee = employeeService.getEmployee(employeeId);
+
+        if( theEmployee == null) {
+            throw new EmployeeNotFoundException("Employee id not found - " + id);
+        }
+
+        employeeService.deleteEmployee(employeeId);
+
+        return "Deleted employee id - " + employeeId;
+    }
 
 }
