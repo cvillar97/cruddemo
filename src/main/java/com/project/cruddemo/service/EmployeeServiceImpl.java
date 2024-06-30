@@ -27,7 +27,17 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public Employee getEmployee(int id) {
-        return employeeDAO.getEmployee(id);
+        Optional<Employee> result = employeeRepository.findById(id);
+
+        Employee theEmployee = null;
+
+        if(result.isPresent()) {
+            theEmployee = result.get();
+        } else {
+            throw new EmployeeNotFoundException("Employee id not found - " + id);
+        }
+
+        return theEmployee;
     }
 
     @Override
