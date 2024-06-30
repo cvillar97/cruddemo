@@ -38,10 +38,6 @@ public class EmployeeController {
 
         Employee theEmployee = employeeService.getEmployee(employeeId);
 
-        if( theEmployee == null) {
-            throw new EmployeeNotFoundException("Employee id not found - " + id);
-        }
-
         return theEmployee;
     }
 
