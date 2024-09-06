@@ -27,3 +27,11 @@ public class EmployeeServiceTests {
     @InjectMocks
     private EmployeeServiceImpl underTest;
 
+    @Test
+    public void EmployeeService_getAll_CallsProperMethod() {
+
+        underTest.getAll();
+
+        verify(employeeRepository).findAll();
+    }
+
