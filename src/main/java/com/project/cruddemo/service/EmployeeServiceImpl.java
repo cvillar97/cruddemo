@@ -1,6 +1,6 @@
 package com.project.cruddemo.service;
 
-import com.project.cruddemo.dao.EmployeeRepository;
+import com.project.cruddemo.repository.EmployeeRepository;
 import com.project.cruddemo.exceptions.EmployeeNotFoundException;
 import com.project.cruddemo.models.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
