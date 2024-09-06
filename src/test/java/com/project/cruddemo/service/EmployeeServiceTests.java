@@ -62,6 +62,17 @@ public class EmployeeServiceTests {
     }
 
     @Test
+    public void EmployeeService_GetEmployeeById_WillThrowWhenIdNotFound() {
+
+        int notFoundId = 1;
+
+        assertThatThrownBy(() -> underTest.getEmployee(notFoundId))
+                .isInstanceOf(EmployeeNotFoundException.class)
+                .hasMessageContaining("Employee id not found - " + notFoundId);
+    }
+
+
+    @Test
     public void EmployeeService_Save_CanSaveEmployee() {
         Employee employee = Employee.builder()
                 .firstName("Juan")
@@ -99,3 +110,15 @@ public class EmployeeServiceTests {
         verify(employeeRepository).deleteById(0);
     }
 
+    @Test
+    public void EmployeeService_DeleteEmployee_WillThrowWhenIdNotFound() {
+
+        int notFoundId = 3;
+
+        assertThatThrownBy(() -> underTest.deleteEmployee(notFoundId))
+                .isInstanceOf(EmployeeNotFoundException.class)
+                .hasMessageContaining(
+                        "Employee with id " + notFoundId + " does not exist");
+    }
+
+}
