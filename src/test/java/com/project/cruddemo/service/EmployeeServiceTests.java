@@ -35,3 +35,29 @@ public class EmployeeServiceTests {
         verify(employeeRepository).findAll();
     }
 
+    @Test
+    public void EmployeeService_GetEmployeeById_PassesSameArgument() {
+
+        Employee employee = Employee.builder()
+                .id(0)
+                .firstName("Carlos")
+                .lastName("Nike")
+                .email("nike.carlos@gmail.com")
+                .build();
+
+        Optional<Employee> employeeOpt = Optional.of(employee);
+
+        when(employeeRepository.findById(0)).thenReturn(employeeOpt);
+
+        ArgumentCaptor<Integer> integerArgumentCaptor =
+                ArgumentCaptor.forClass(Integer.class);
+
+        underTest.getEmployee(0);
+
+        verify(employeeRepository).findById(integerArgumentCaptor.capture());
+
+        int capturedId = integerArgumentCaptor.getValue();
+
+        assertThat(capturedId).isEqualTo(0);
+    }
+
