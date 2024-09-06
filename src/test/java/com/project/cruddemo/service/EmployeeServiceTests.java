@@ -61,3 +61,41 @@ public class EmployeeServiceTests {
         assertThat(capturedId).isEqualTo(0);
     }
 
+    @Test
+    public void EmployeeService_Save_CanSaveEmployee() {
+        Employee employee = Employee.builder()
+                .firstName("Juan")
+                .lastName("Alonso")
+                .email("alonso.juan@gmail.com")
+                .build();
+
+        underTest.saveEmployee(employee);
+
+        ArgumentCaptor <Employee> employeeArgumentCaptor =
+                ArgumentCaptor.forClass(Employee.class);
+
+        verify(employeeRepository).save(employeeArgumentCaptor.capture());
+
+        Employee capturedEmployee = employeeArgumentCaptor.getValue();
+
+        assertThat(capturedEmployee).isEqualTo(employee);
+    }
+
+    @Test
+    public void EmployeeService_DeleteEmployee_CallsDeleteById() {
+
+        Employee employee = Employee.builder()
+                .firstName("Juan")
+                .lastName("Alonso")
+                .email("alonso.juan@gmail.com")
+                .build();
+
+        employeeRepository.save(employee);
+
+        given(employeeRepository.existsById(0)).willReturn(true);
+
+        underTest.deleteEmployee(0);
+
+        verify(employeeRepository).deleteById(0);
+    }
+
