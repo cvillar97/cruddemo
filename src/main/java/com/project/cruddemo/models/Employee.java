@@ -1,11 +1,13 @@
 package com.project.cruddemo.models;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 
 @Entity
 @Table(name="employee")
 @Data
+@Builder
 public class Employee {
 
     @Id

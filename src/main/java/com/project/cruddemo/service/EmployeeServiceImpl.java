@@ -1,11 +1,10 @@
 package com.project.cruddemo.service;
 
-import com.project.cruddemo.dao.EmployeeRepository;
+import com.project.cruddemo.repository.EmployeeRepository;
 import com.project.cruddemo.exceptions.EmployeeNotFoundException;
 import com.project.cruddemo.models.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +20,7 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public List<Employee> findAll() {
+    public List<Employee> getAll() {
         return employeeRepository.findAll();
     }
 
@@ -47,6 +46,12 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public void deleteEmployee(int id) {
+
+        if(employeeRepository.existsById(id) == false) {
+            throw new EmployeeNotFoundException(
+                    "Employee with id " + id + " does not exist"
+            );
+        }
         employeeRepository.deleteById(id);
     }
 }
