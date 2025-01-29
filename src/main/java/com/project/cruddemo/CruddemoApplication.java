@@ -20,7 +20,8 @@ public class CruddemoApplication {
 				.info(new Info()
 						.title("Employee Repository API")
 						.version("1.0")
-						.description("Employee CRUD API")
+						.description("API that performs CRUD operations on a MySQL database that stores" +
+								" Employee type objects")
 						.termsOfService("http://swagger.io/terms/")
 						.license(new License().name("Apache 2.0").url("http://springdoc.org")));
 	}
